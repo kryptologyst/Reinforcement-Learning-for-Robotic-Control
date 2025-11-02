@@ -1,0 +1,80 @@
+# Configuration file for RL Robotic Control Project
+
+# Environment settings
+environment:
+  name: "Pendulum-v1"
+  max_episode_steps: 200
+  render_mode: null  # Set to "human" for visualization
+
+# Training settings
+training:
+  total_timesteps: 100000
+  eval_freq: 10000
+  save_freq: 20000
+  log_interval: 10
+  
+# Algorithm settings
+algorithms:
+  ddpg:
+    learning_rate: 1e-3
+    buffer_size: 100000
+    batch_size: 128
+    gamma: 0.99
+    tau: 0.005
+    exploration_noise: 0.1
+    
+  ppo:
+    learning_rate: 3e-4
+    n_steps: 2048
+    batch_size: 64
+    n_epochs: 10
+    gamma: 0.99
+    gae_lambda: 0.95
+    clip_range: 0.2
+    
+  sac:
+    learning_rate: 3e-4
+    buffer_size: 100000
+    batch_size: 256
+    gamma: 0.99
+    tau: 0.005
+    target_update_interval: 1
+    
+  td3:
+    learning_rate: 1e-3
+    buffer_size: 100000
+    batch_size: 256
+    gamma: 0.99
+    tau: 0.005
+    policy_delay: 2
+    target_noise_clip: 0.5
+    target_noise: 0.2
+
+# Network architecture
+networks:
+  actor:
+    hidden_sizes: [256, 256]
+    activation: "relu"
+    
+  critic:
+    hidden_sizes: [256, 256]
+    activation: "relu"
+
+# Logging and monitoring
+logging:
+  tensorboard: true
+  wandb: false
+  wandb_project: "rl-robotic-control"
+  log_dir: "logs/"
+
+# Checkpoint settings
+checkpoints:
+  save_dir: "checkpoints/"
+  load_path: null
+  save_replay_buffer: true
+
+# Evaluation settings
+evaluation:
+  n_eval_episodes: 10
+  deterministic: true
+  render: false
